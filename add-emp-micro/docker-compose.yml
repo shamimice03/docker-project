@@ -1,0 +1,47 @@
+services:
+  add-backend:
+    build: ./backend
+    # ports:
+    #   - "5000:5000"
+    environment:
+      - DBHOST=db
+      - DBUSER=root
+      - DBPWD=abcd1234
+      - DATABASE=employee_db
+      - DBPORT=3306
+    depends_on:
+      db:
+        condition: service_healthy
+
+  add-frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    environment:
+      - BACKEND_URL=http://add-backend:5000
+      - EC2_PUBLIC_URL=52.194.225.109
+    depends_on:
+      - add-backend
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abcd1234
+      MYSQL_DATABASE: employee_db
+    volumes:
+      - mysql_datastore:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_datastore:
+
+networks:
+  default:
+    name: employee-management-network

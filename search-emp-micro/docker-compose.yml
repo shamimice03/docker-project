@@ -1,0 +1,26 @@
+services:
+  search-backend:
+    build: ./backend
+    # ports:
+    #   - "5050:5050"
+    environment:
+      - DBHOST=db
+      - DBUSER=root
+      - DBPWD=abcd1234
+      - DATABASE=employee_db
+      - DBPORT=3306
+
+  search-frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    environment:
+      - BACKEND_URL=http://search-backend:5050
+      - EC2_PUBLIC_URL=52.194.225.109
+    depends_on:
+      - search-backend
+
+networks:
+  default:
+    name: employee-management-network
+    external: true
