@@ -53,24 +53,24 @@ The system is containerized using Docker and orchestrated with Docker Compose, m
    cd docker-project
    ```
 
-6. Deploy the add-emp-micro service:
+6. Deploy the `add-emp-micro` service:
+   - Move to the directory
    ```
    cd add-emp-micro
    ```
-
-   * Change ` EC2_PUBLIC_URL=<ip or dns>` in `docker-compose.yml`
-   
+   - Change ` EC2_PUBLIC_URL=<ip or dns>` in `docker-compose.yml`
+   - Run following command:
    ```
    docker-compose up -d
    ```
 
-7. Deploy the search-emp-micro service:
+7. Deploy the `search-emp-micro` service:
+   - Move to the directory
    ```
    cd ../search-emp-micro
    ```
-
-   * Change ` EC2_PUBLIC_URL=<ip or dns>` in `docker-compose.yml`
-   
+   - Change ` EC2_PUBLIC_URL=<ip or dns>` in `docker-compose.yml`
+   - Run following command:
    ```
    docker-compose up -d
    ```
