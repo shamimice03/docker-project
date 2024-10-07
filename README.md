@@ -82,12 +82,16 @@ The system is containerized using Docker and orchestrated with Docker Compose, m
 
 ## Usage
 - To add an employee, access: `http://your-ec2-public-ip-or-dns`
+
 ![alt text](./docs/image-6.png)
 - After adding:
+
 ![alt text](./docs/image-3.png)
 - To search for an employee, access: `http://your-ec2-public-ip-or-dns:8080`
+
 ![alt text](./docs/image-4.png)
 - After search:
+
 ![alt text](./docs/image-5.png)
 Replace `your-ec2-public-ip-or-dns` with your actual EC2 instance's public IP or DNS.
 
