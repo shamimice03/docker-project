@@ -11,9 +11,7 @@ The system is containerized using Docker and orchestrated with Docker Compose, m
 
 ## System Architecture
 
-![Employee Management System Architecture](./image.png)
-
-
+![Employee Management System Architecture](./docs/image.png)
 
 ## Prerequisites
 
@@ -51,15 +49,17 @@ The system is containerized using Docker and orchestrated with Docker Compose, m
 
 3. Clone the repository:
    ```
-   git clone https://your-repository-url.git
-   cd your-repository-name
+   git clone https://github.com/shamimice03/docker-project.git
+   cd docker-project
    ```
 
 6. Deploy the add-emp-micro service:
    ```
    cd add-emp-micro
    ```
-   - Change ` EC2_PUBLIC_URL=<ip or dns>` in `docker-compose.y
+
+   * Change ` EC2_PUBLIC_URL=<ip or dns>` in `docker-compose.yml`
+   
    ```
    docker-compose up -d
    ```
@@ -68,7 +68,9 @@ The system is containerized using Docker and orchestrated with Docker Compose, m
    ```
    cd ../search-emp-micro
    ```
-   - Change ` EC2_PUBLIC_URL=<ip or dns>` in `docker-compose.yml`
+
+   * Change ` EC2_PUBLIC_URL=<ip or dns>` in `docker-compose.yml`
+   
    ```
    docker-compose up -d
    ```
@@ -79,15 +81,14 @@ The system is containerized using Docker and orchestrated with Docker Compose, m
    ```
 
 ## Usage
-
 - To add an employee, access: `http://your-ec2-public-ip-or-dns`
-![alt text](image-6.png)
+![alt text](./docs/image-6.png)
 - After adding:
-![alt text](image-3.png)
+![alt text](./docs/image-3.png)
 - To search for an employee, access: `http://your-ec2-public-ip-or-dns:8080`
-![alt text](image-4.png)
+![alt text](./docs/image-4.png)
 - After search:
-![alt text](image-5.png)
+![alt text](./docs/image-5.png)
 Replace `your-ec2-public-ip-or-dns` with your actual EC2 instance's public IP or DNS.
 
 ## Troubleshooting
@@ -133,58 +134,4 @@ If you encounter any issues:
   ```
   cat backup.sql | docker exec -i container-name mysql -u root -pabcd1234 employee_db
   ```
-
-## Generating System Diagram
-
-1. Install Mermaid CLI:
-   ```
-   npm install -g @mermaid-js/mermaid-cli
-   ```
-
-2. Create `system_architecture.mmd` with the following content:
-   ```mermaid
-   graph TD
-       A[User] -->|HTTP| B[EC2 Instance: 52.194.225.109]
-       B -->|Port 80| C[add-frontend]
-       B -->|Port 8080| D[search-frontend]
-       
-       subgraph "EC2 Instance"
-           subgraph "Docker Network: employee-management-network"
-               C -->|Internal| E[add-backend:5000]
-               D -->|Internal| F[search-backend:5050]
-               E -->|Internal| G[(MySQL Database)]
-               F -->|Internal| G
-               G -->|Volume| H[mysql_datastore]
-               G -->|Init Script| I[init.sql]
-           end
-       end
-       
-       C -->|Link| D
-       D -->|Link| C
-       
-       J[ENV: EC2_PUBLIC_URL] -->|Configures| C
-       J -->|Configures| D
-
-       subgraph "add-emp-micro"
-           C
-           E
-           G
-           H
-           I
-       end
-
-       subgraph "search-emp-micro"
-           D
-           F
-       end
-
-       K[ENV Variables] -->|Configures| E
-       K -->|Configures| F
-       L[ENV Variables] -->|Configures| G
-   ```
-
-3. Generate the PNG image:
-   ```
-   mmdc -i system_architecture.mmd -o system_architecture.png
-   ```
 
