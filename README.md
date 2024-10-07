@@ -80,7 +80,8 @@ The system is containerized using Docker and orchestrated with Docker Compose, m
    docker-compose ps
    ```
 
-9. `docker ps -a`
+9. `docker ps -a`:
+
 ![alt text](./docs/image-8.png)
 
 ## Usage
