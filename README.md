@@ -80,9 +80,9 @@ The system is containerized using Docker and orchestrated with Docker Compose, m
    docker-compose ps
    ```
 
-9. `docker ps -a`:
-
-![alt text](./docs/image-8.png)
+9. Check containers `docker ps -a`
+![containers](./docs/image-8.png)
+   
 
 ## Usage
 - To add an employee, access: `http://your-ec2-public-ip-or-dns`
