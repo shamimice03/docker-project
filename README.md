@@ -133,3 +133,58 @@ If you encounter any issues:
   ```
   cat backup.sql | docker exec -i container-name mysql -u root -pabcd1234 employee_db
   ```
+
+## Generating System Diagram
+
+1. Install Mermaid CLI:
+   ```
+   npm install -g @mermaid-js/mermaid-cli
+   ```
+
+2. Create `system_architecture.mmd` with the following content:
+   ```mermaid
+   graph TD
+       A[User] -->|HTTP| B[EC2 Instance: 52.194.225.109]
+       B -->|Port 80| C[add-frontend]
+       B -->|Port 8080| D[search-frontend]
+       
+       subgraph "EC2 Instance"
+           subgraph "Docker Network: employee-management-network"
+               C -->|Internal| E[add-backend:5000]
+               D -->|Internal| F[search-backend:5050]
+               E -->|Internal| G[(MySQL Database)]
+               F -->|Internal| G
+               G -->|Volume| H[mysql_datastore]
+               G -->|Init Script| I[init.sql]
+           end
+       end
+       
+       C -->|Link| D
+       D -->|Link| C
+       
+       J[ENV: EC2_PUBLIC_URL] -->|Configures| C
+       J -->|Configures| D
+
+       subgraph "add-emp-micro"
+           C
+           E
+           G
+           H
+           I
+       end
+
+       subgraph "search-emp-micro"
+           D
+           F
+       end
+
+       K[ENV Variables] -->|Configures| E
+       K -->|Configures| F
+       L[ENV Variables] -->|Configures| G
+   ```
+
+3. Generate the PNG image:
+   ```
+   mmdc -i system_architecture.mmd -o system_architecture.png
+   ```
+
