@@ -19,7 +19,7 @@ services:
       - "80:80"
     environment:
       - BACKEND_URL=http://add-backend:5000
-      - EC2_PUBLIC_URL=52.194.225.109
+      - EC2_PUBLIC_URL=52.195.212.169
     depends_on:
       - add-backend
 

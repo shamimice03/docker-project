@@ -16,7 +16,7 @@ services:
       - "8080:80"
     environment:
       - BACKEND_URL=http://search-backend:5050
-      - EC2_PUBLIC_URL=52.194.225.109
+      - EC2_PUBLIC_URL=52.195.212.169
     depends_on:
       - search-backend
 
